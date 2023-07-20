@@ -3,10 +3,18 @@ import { Button } from "reactstrap";
 import CreateTask from "../Modal/CreateTask";
 
 const Header = () => {
-  const [modal, setModal] = useState("");
+  const [modal, setModal] = useState(false);
+  const [taskList, setTaskList] = useState([]);
 
   const toggle = () => {
     setModal(!modal);
+  };
+
+  const saveTask = (task) => {
+    let tempList = taskList;
+    tempList.push(task);
+    setTaskList(tempList);
+    setModal(false);
   };
 
   return (
@@ -29,7 +37,10 @@ const Header = () => {
           Create Task
         </Button>
       </div>
-      <CreateTask toggle={toggle} modal={modal} />
+      <div className="task-container">
+        {taskList.map((e) => <li>{e.title}</li>)}
+      </div>
+      <CreateTask toggle={toggle} modal={modal} save={saveTask} />
     </>
   );
 };

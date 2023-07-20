@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Modal,
@@ -11,7 +11,27 @@ import {
   Input,
 } from "reactstrap";
 
-function CreateTask({ modal, toggle }) {
+function CreateTask({ modal, toggle, save }) {
+  const [taskName, setTaskName] = useState("");
+  const [bio, setBio] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "title") {
+      setTaskName(value);
+    } else {
+      setBio(value);
+    }
+  };
+
+  const handleSave = () => {
+    let task = {};
+    task["title"] = taskName;
+    task["bio"] = bio;
+    save(task);
+  };
+
   return (
     <div>
       <Modal isOpen={modal} toggle={toggle}>
@@ -20,16 +40,16 @@ function CreateTask({ modal, toggle }) {
           <Form>
             <FormGroup>
               <Label>Title</Label>
-              <Input name="title" type="text" />
+              <Input name="title" type="text" value={taskName} onChange={handleChange}/>
             </FormGroup>
             <FormGroup>
               <Label>Bio</Label>
-              <Input name="text" type="textarea" />
+              <Input name="bio" type="textarea" value={bio}onChange={handleChange} />
             </FormGroup>
           </Form>
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>
+          <Button color="primary" onClick={handleSave}>
             Create
           </Button>{" "}
           <Button color="secondary" onClick={toggle}>
