@@ -1,14 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Button } from "reactstrap";
 import CreateTask from "../Modal/CreateTask";
 
 const Header = () => {
-
-  const [modal, setModal] = useState("")
+  const [modal, setModal] = useState("");
 
   const toggle = () => {
-    setModal(!modal)
-  }
+    setModal(!modal);
+  };
 
   return (
     <>
@@ -22,11 +21,15 @@ const Header = () => {
         }}
       >
         <h3>Todo App</h3>
-        <Button color="primary" style={{ padding: "8px" }} onClick={() => setModal(true)}>
+        <Button
+          color="primary"
+          style={{ padding: "8px", marginTop: "10px" }}
+          onClick={() => setModal(true)}
+        >
           Create Task
         </Button>
       </div>
-      <CreateTask toggle={toggle} modal={modal}/>
+      <CreateTask toggle={toggle} modal={modal} />
     </>
   );
 };
