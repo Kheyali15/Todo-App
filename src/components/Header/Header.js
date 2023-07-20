@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "reactstrap";
+import Cards from "../Card/Card";
 import CreateTask from "../Modal/CreateTask";
 
 const Header = () => {
@@ -7,13 +8,13 @@ const Header = () => {
   const [taskList, setTaskList] = useState([]);
 
   useEffect(() => {
-    let arr = localStorage.getItem("taskList")
+    let arr = localStorage.getItem("taskList");
 
     if (arr) {
-      let obj = JSON.parse(arr)
-      setTaskList(obj)
+      let obj = JSON.parse(arr);
+      setTaskList(obj);
     }
-  }, []) 
+  }, []);
 
   const toggle = () => {
     setModal(!modal);
@@ -47,9 +48,9 @@ const Header = () => {
           Create Task
         </Button>
       </div>
-      <div className="task-container">
-        {taskList.map((e) => (
-          <li>{e.title}</li>
+      <div style={{ display: "flex", flexWrap: "wrap", padding: "0 40px", gap:"15px"}}>
+        {taskList.map((e, index) => (
+          <Cards taskObj={e} index={index} />
         ))}
       </div>
       <CreateTask toggle={toggle} modal={modal} save={saveTask} />
