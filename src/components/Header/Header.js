@@ -28,6 +28,14 @@ const Header = () => {
     setModal(false);
   };
 
+  const deleteTask = (index) => {
+    let tempList = taskList;
+    tempList.splice(index, 1);
+    localStorage.setItem("taskList", JSON.stringify(tempList))
+    setTaskList(tempList)
+    window.location.reload()
+  }
+
   return (
     <>
       <div
@@ -50,7 +58,7 @@ const Header = () => {
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", padding: "0 40px", gap:"15px"}}>
         {taskList.map((e, index) => (
-          <Cards taskObj={e} index={index} />
+          <Cards taskObj={e} index={index} deleteTask={deleteTask}/>
         ))}
       </div>
       <CreateTask toggle={toggle} modal={modal} save={saveTask} />

@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardBody, CardHeader, CardText } from "reactstrap";
 import { AiOutlineDelete } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
+import EditTask from "../Modal/EditTask";
 
-const Cards = ({ taskObj, index }) => {
-  
+const Cards = ({ taskObj, index, deleteTask }) => {
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => {
+    setModal(!modal);
+  };
+
+  const handleDelete = () => {
+    deleteTask(index);
+  };
 
   return (
     <>
@@ -24,6 +33,7 @@ const Cards = ({ taskObj, index }) => {
             <AiOutlineDelete onClick={handleDelete} />
           </div>
         </CardBody>
+        <EditTask modal={modal} toggle={toggle} updateTask={updateTask} />
       </Card>
     </>
   );
