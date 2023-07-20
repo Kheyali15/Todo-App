@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "reactstrap";
 import CreateTask from "../Modal/CreateTask";
 
 const Header = () => {
   const [modal, setModal] = useState(false);
   const [taskList, setTaskList] = useState([]);
+
+  useEffect(() => {
+    let arr = localStorage.getItem("taskList")
+
+    if (arr) {
+      let obj = JSON.parse(arr)
+      setTaskList(obj)
+    }
+  }, []) 
 
   const toggle = () => {
     setModal(!modal);
@@ -13,6 +22,7 @@ const Header = () => {
   const saveTask = (task) => {
     let tempList = taskList;
     tempList.push(task);
+    localStorage.setItem("taskList", JSON.stringify(tempList));
     setTaskList(tempList);
     setModal(false);
   };
@@ -38,7 +48,9 @@ const Header = () => {
         </Button>
       </div>
       <div className="task-container">
-        {taskList.map((e) => <li>{e.title}</li>)}
+        {taskList.map((e) => (
+          <li>{e.title}</li>
+        ))}
       </div>
       <CreateTask toggle={toggle} modal={modal} save={saveTask} />
     </>
